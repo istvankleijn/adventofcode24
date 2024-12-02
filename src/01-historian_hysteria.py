@@ -1,3 +1,4 @@
+import collections
 import pathlib
 
 
@@ -54,11 +55,16 @@ class HistoriansLists:
         )
         return distance
     
+    def similarity_score(self):
+        counts = collections.Counter(self.right)
+        score = sum(x * counts[x] for x in self.left)
+        return score
+    
     def get_answer1(self, *, debug = False):
         return self.get_distance(debug = debug)
 
     def get_answer2(self, *, debug = False):
-        return None
+        return self.similarity_score()
     
     def get_answers(self, *, debug = False):
         answer1 = self.get_answer1(debug = debug)
