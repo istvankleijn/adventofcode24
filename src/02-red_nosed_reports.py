@@ -49,15 +49,28 @@ class Report:
 class Reports:
     def __init__(self, reports):
         self.reports = reports
-    
-    def run_analysis(self, *, debug=False):
         self.safety = [report.is_safe() for report in self.reports]
+    
+    def dampen_problems(self, min=1, max=3):
+        for i, report in enumerate(self.reports):
+            if report.is_safe() or not report.adjacent_levels_between(0, max):
+                continue
+            for j in range(report.nlevels):
+                levels = report.levels
+                levels[:j] 
+                dampened_report = Report(levels[:j] + levels[j+1:])
+                if  dampened_report.is_safe():
+                    self.safety[i] = True
+
+    def run_analysis(self, *, debug=False):
+        pass
     
     def get_answer1(self, *, debug=False):
         return sum(self.safety)
 
     def get_answer2(self, *, debug=False):
-        return None
+        self.dampen_problems()
+        return sum(self.safety)
     
     def get_answers(self, *, debug=False):
         answer1 = self.get_answer1(debug=debug)
