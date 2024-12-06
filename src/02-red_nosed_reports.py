@@ -41,7 +41,6 @@ class Report:
             if diff < min or diff > max:
                 return False
         return True
-
     
     def is_safe(self):
         return self.is_ordered() and self.adjacent_levels_between(1, 3)
@@ -53,7 +52,7 @@ class Reports:
     
     def dampen_problems(self, min=1, max=3):
         for i, report in enumerate(self.reports):
-            if report.is_safe() or not report.adjacent_levels_between(0, max):
+            if report.is_safe():
                 continue
             for j in range(report.nlevels):
                 levels = report.levels
